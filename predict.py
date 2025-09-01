@@ -1,6 +1,7 @@
 import os
 import json
 import numpy as np
+import matplotlib.pyplot as plt
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 
@@ -27,16 +28,20 @@ for img_name in os.listdir(test_dir):
 
     # Predict
     prediction = model.predict(img_array, verbose=0)[0][0]
-
     pred_class = int(round(prediction))   # 0 or 1
     label = idx_to_class[pred_class]
 
-    # Add emoji
+    # Emoji & text
     if label == "dogs":
         result = "Dog 🐶"
     else:
         result = "Not Dog 🙅‍♂️"
 
-    # Confidence
     confidence = prediction * 100 if prediction > 0.5 else (1 - prediction) * 100
     print(f"{img_name} → {result} ({confidence:.2f}%)")
+
+    # 🔹 Show image with prediction
+    plt.imshow(image.load_img(img_path))  # original size
+    plt.axis("off")
+    plt.title(f"{result}\nConfidence: {confidence:.2f}%")
+    plt.show()
