@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# VS Code
+.vscode/
+
+# Model files / big artifacts
+*.h5
+*.keras
+*.ckpt
+*.tflite
+logs/
