@@ -38,22 +38,20 @@ val_gen = datagen.flow_from_directory(
     shuffle=False
 )
 
-# ---- Model (deeper CNN) ----
+# ---- Transfer Learning (MobileNetV2) ----
+base_model = tf.keras.applications.MobileNetV2(
+    input_shape=(150,150,3),
+    include_top=False,
+    weights="imagenet"
+)
+base_model.trainable = False  # freeze pretrained layers
+
 model = models.Sequential([
-    layers.Conv2D(32, (3,3), activation="relu", input_shape=(150,150,3)),
-    layers.MaxPooling2D(2,2),
-
-    layers.Conv2D(64, (3,3), activation="relu"),
-    layers.MaxPooling2D(2,2),
-
-    layers.Conv2D(128, (3,3), activation="relu"),
-    layers.MaxPooling2D(2,2),
-
-    layers.Flatten(),
-    layers.Dense(256, activation="relu"),
-    layers.Dropout(0.5),
+    base_model,
+    layers.GlobalAveragePooling2D(),
     layers.Dense(128, activation="relu"),
-    layers.Dense(1, activation="sigmoid")   # binary output
+    layers.Dropout(0.5),
+    layers.Dense(1, activation="sigmoid")
 ])
 
 model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
@@ -62,8 +60,19 @@ model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"]
 history = model.fit(
     train_gen,
     validation_data=val_gen,
-    epochs=15
+    epochs=10
 )
+
+# ---- Fine-tune (optional) ----
+base_model.trainable = True
+model.compile(optimizer=tf.keras.optimizers.Adam(1e-5), loss="binary_crossentropy", metrics=["accuracy"])
+history_finetune = model.fit(
+    train_gen,
+    validation_data=val_gen,
+    epochs=5
+)
+print(train_gen.class_indices)
+
 
 # ---- Save model + class indices ----
 model.save("dog_notdog_model.keras")
