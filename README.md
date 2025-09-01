@@ -52,7 +52,6 @@ Contributions are welcome! Please open issues and pull requests to discuss impro
 ## License
 
 MIT License
-MIT License
 
 Copyright (c) 2025 Braveheart66
 
