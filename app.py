@@ -20,7 +20,7 @@ if not os.path.exists(MODEL_PATH):
 # -------------------------------
 # 1. Load model
 # -------------------------------
-model = load_model(f"https://drive.google.com/file/d/1Ojj5UmyvafwRPrNnJMN-Ud6kUd1BRz-Z/view?usp=sharing")  # Update path if needed
+model = load_model(MODEL_PATH)  # Update path if needed
 
 # -------------------------------
 # 2. Streamlit App Layout
