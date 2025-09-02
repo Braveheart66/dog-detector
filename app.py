@@ -15,7 +15,7 @@ URL = f"https://drive.google.com/file/d/1Ojj5UmyvafwRPrNnJMN-Ud6kUd1BRz-Z/view?u
 
 # Download model if not already present
 if not os.path.exists(MODEL_PATH):
-    gdown.download(URL, MODEL_PATH, quiet=False)
+    gdown.download(URL, output=MODEL_PATH, quiet=False)
 
 # -------------------------------
 # 1. Load model
