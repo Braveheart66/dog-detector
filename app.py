@@ -2,6 +2,20 @@ import streamlit as st
 from tensorflow.keras.models import load_model
 import numpy as np
 from PIL import Image
+import gdown
+from keras.models import load_model
+import os
+
+# Path where model will be saved
+MODEL_PATH = "best_dog_notdog_model.keras"
+
+# Google Drive file ID
+FILE_ID = "1Ojj5UmyvafwRPrNnJMN-Ud6kUd1BRz-Z"  # replace with your file ID
+URL = f"https://drive.google.com/file/d/1Ojj5UmyvafwRPrNnJMN-Ud6kUd1BRz-Z/view?usp=sharing"
+
+# Download model if not already present
+if not os.path.exists(MODEL_PATH):
+    gdown.download(URL, MODEL_PATH, quiet=False)
 
 # -------------------------------
 # 1. Load model
