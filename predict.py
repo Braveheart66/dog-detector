@@ -7,7 +7,7 @@ from tensorflow.keras.preprocessing import image
 model = tf.keras.models.load_model("best_dog_notdog_model.keras")
 
 # Keep mapping consistent with training
-class_labels = {0: "Dog 🐶", 1: "Not Dog 🙅‍♂️"}
+class_labels = {1: "Dog 🐶", 0: "Not Dog 🙅‍♂️"}
 
 def predict_and_plot(img_path):
     # Preprocess image (match MobileNetV2 input: 128x128)
@@ -17,8 +17,8 @@ def predict_and_plot(img_path):
 
     # Predict
     prediction = model.predict(img_array)[0][0]
-    pred_class = 1 if prediction > 0.5 else 0
-    confidence = prediction if pred_class == 1 else 1 - prediction
+    pred_class = 0 if prediction < 0.5 else 1
+    confidence = prediction if pred_class == 1 - prediction else 1
 
     # Label
     label = f"{class_labels[pred_class]} ({confidence*100:.2f}%)"

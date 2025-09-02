@@ -22,7 +22,7 @@ datagen = ImageDataGenerator(
 
 train_gen = datagen.flow_from_directory(
     data_dir,
-    target_size=(150, 150),
+    target_size=(128, 128),
     batch_size=16,
     class_mode="binary",
     subset="training",
@@ -31,7 +31,7 @@ train_gen = datagen.flow_from_directory(
 
 val_gen = datagen.flow_from_directory(
     data_dir,
-    target_size=(150, 150),
+    target_size=(128, 128),
     batch_size=16,
     class_mode="binary",
     subset="validation",
@@ -40,7 +40,7 @@ val_gen = datagen.flow_from_directory(
 
 # ---- Transfer Learning (MobileNetV2) ----
 base_model = tf.keras.applications.MobileNetV2(
-    input_shape=(150,150,3),
+    input_shape=(128,128,3),
     include_top=False,
     weights="imagenet"
 )
